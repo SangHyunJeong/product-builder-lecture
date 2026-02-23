@@ -1,14 +1,533 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>로또 5게임 추천기 (모바일 최적화)</title>
+
+<style>
+  :root {
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #111;
+    --muted: #666;
+    --border: #e9ecf3;
+    --primary: #1f6fff;
+    --ghost: #eef3ff;
+    --ghostBorder: #d7e4ff;
+  }
+
+  body.dark {
+    --bg: #121418;
+    --card: #1b1f26;
+    --text: #f1f3f8;
+    --muted: #9aa3b2;
+    --border: #2a2f38;
+    --primary: #4f8cff;
+    --ghost: #222a3a;
+    --ghostBorder: #2f3a52;
+  }
+
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Noto Sans KR", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    /* 모바일 브라우저 주소창 높이를 고려한 dvh 사용, 상하 여백 추가 */
+    min-height: 100dvh;
+    padding: 20px 0;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    transition: background .25s ease, color .25s ease;
+    overflow-x: hidden;
+  }
+
+  .card {
+    width: min(920px, 92vw);
+    background: var(--card);
+    border-radius: 18px;
+    padding: 26px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.10);
+    transition: background .25s ease;
+    position: relative;
+    z-index: 10;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    letter-spacing: -0.2px;
+  }
+  .sub {
+    margin: 0 0 16px;
+    font-size: 13px;
+    color: #444;
+  }
+  body.dark .sub { color: var(--muted); }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  button {
+    border: none;
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 15px;
+    transition: transform .06s ease, filter .2s ease, opacity .2s ease;
+    /* 모바일에서 빠른 터치 시 화면 확대 방지 */
+    touch-action: manipulation;
+  }
+  button:active { transform: translateY(1px); }
+  button[disabled] { opacity: .6; cursor: not-allowed; }
+
+  #btnPick {
+    flex: 1.2;
+    background: var(--primary);
+    color: white;
+  }
+  #btnCopy {
+    flex: .8;
+    background: var(--ghost);
+    color: var(--primary);
+    border: 1px solid var(--ghostBorder);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  
+  /* 테블릿 사이즈 최적화 */
+  @media (max-width: 720px){
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .game {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    background: rgba(255,255,255,.35);
+  }
+  body.dark .game {
+    background: rgba(255,255,255,.03);
+  }
+
+  .game-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .game-title { font-weight: 900; }
+
+  .status {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #b7bccb;
+  }
+  .dot.run { background: var(--primary); box-shadow: 0 0 0 6px rgba(31,111,255,.12); }
+  .dot.done { background: #20b26b; box-shadow: 0 0 0 6px rgba(32,178,107,.12); }
+
+  .nums {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .ball {
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 16px;
+    color: #fff;
+    box-shadow: 0 6px 12px rgba(0,0,0,.12);
+    user-select: none;
+    transition: transform .14s ease, filter .2s ease;
+  }
+
+  .plus {
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--muted);
+    margin: 0 2px;
+  }
+
+  /* 📱 모바일(작은 화면) 최적화 */
+  @media (max-width: 480px){
+    .card { padding: 20px 16px; }
+    h1 { font-size: 20px; }
+    .sub { font-size: 12px; }
+    .controls { gap: 8px; }
+    button { padding: 12px; font-size: 14px; }
+    .game { padding: 12px; }
+    
+    /* 작은 화면에서 공이 줄바꿈 되지 않도록 크기/간격 조절 */
+    .nums { gap: 5px; justify-content: center; }
+    .ball { width: 36px; height: 36px; font-size: 14px; }
+    .plus { font-size: 16px; margin: 0 1px; }
+    
+    .theme-fab { 
+      right: 12px; 
+      bottom: 12px; 
+      width: 44px; 
+      height: 44px; 
+      font-size: 20px; 
+    }
+  }
+
+  .ball.spin {
+    filter: brightness(1.06);
+    animation: wobble .18s infinite alternate;
+  }
+
+  .ball.pop {
+    animation: pop .18s ease;
+  }
+
+  .ball.flash {
+    animation: flash 0.55s ease;
+  }
+
+  @keyframes wobble {
+    from { transform: translateY(-1px) rotate(-2deg); }
+    to { transform: translateY(1px) rotate(2deg); }
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    55% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes flash {
+    0% { box-shadow: 0 0 0 rgba(138,43,226,0), 0 6px 12px rgba(0,0,0,.12); }
+    35% { box-shadow: 0 0 18px rgba(138,43,226,.8), 0 6px 12px rgba(0,0,0,.12); }
+    100% { box-shadow: 0 0 0 rgba(138,43,226,0), 0 6px 12px rgba(0,0,0,.12); }
+  }
+
+  /* 번호 구간별 색상 */
+  .yellow { background: #fbc400; }
+  .blue { background: #4aa3ff; }
+  .red { background: #ff4a4a; }
+  .gray { background: #999; }
+  .green { background: #4caf50; }
+
+  /* 보너스 강조 */
+  .bonus {
+    border: 4px solid #8a2be2;
+    box-sizing: border-box;
+  }
+
+  .meta {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 14px;
+  }
+
+  .theme-fab {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: 1;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform .18s ease, background .25s ease, color .25s ease, border .25s ease;
+    z-index: 50;
+    /* 모바일 더블 탭 확대 방지 */
+    touch-action: manipulation;
+  }
+  .theme-fab:hover { transform: scale(1.08); }
+  .theme-fab:active { transform: scale(1.03); }
+
+</style>
 </head>
+
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+
+<main class="card" id="card">
+  <h1>🎲 로또 5게임 추천기</h1>
+  <p class="sub">드르륵 돌다가 게임별로 “딱!” 멈추고, 보너스는 마지막에 번쩍 ✨</p>
+
+  <div class="controls">
+    <button id="btnPick">추첨 시작하기</button>
+    <button id="btnCopy" type="button">전체 복사</button>
+  </div>
+
+  <section class="grid" id="grid"></section>
+  <div class="meta" id="meta">대기 중…</div>
+</main>
+
+<button class="theme-fab" id="themeBtn" aria-label="테마 전환"></button>
+
+<script>
+  const GAME_COUNT = 5;
+  const MAIN_COUNT = 6;
+  const MAX_NUM = 45;
+
+  const grid = document.getElementById("grid");
+  const btnPick = document.getElementById("btnPick");
+  const btnCopy = document.getElementById("btnCopy");
+  const meta = document.getElementById("meta");
+  const themeBtn = document.getElementById("themeBtn");
+
+  let lastResults = [];
+  let running = false;
+
+  /* ----------------- 테마 ----------------- */
+  function applyTheme(theme){
+    if(theme === "dark"){
+      document.body.classList.add("dark");
+      themeBtn.textContent = "🌙";
+    } else {
+      document.body.classList.remove("dark");
+      themeBtn.textContent = "☀";
+    }
+  }
+
+  function toggleTheme(){
+    const current = document.body.classList.contains("dark") ? "dark" : "light";
+    const next = current === "dark" ? "light" : "dark";
+    localStorage.setItem("theme", next);
+    applyTheme(next);
+  }
+
+  themeBtn.addEventListener("click", toggleTheme);
+  applyTheme(localStorage.getItem("theme") || "light");
+
+  /* ----------------- 로또 유틸 ----------------- */
+  function getColorClass(n){
+    if (n <= 10) return "yellow";
+    if (n <= 20) return "blue";
+    if (n <= 30) return "red";
+    if (n <= 40) return "gray";
+    return "green";
+  }
+
+  function pickOneGameFinal(){
+    const set = new Set();
+    while(set.size < MAIN_COUNT + 1){
+      set.add(Math.floor(Math.random() * MAX_NUM) + 1);
+    }
+    const arr = [...set];
+    const main = arr.slice(0, MAIN_COUNT).sort((a,b)=>a-b);
+    const bonus = arr[MAIN_COUNT];
+    return { main, bonus };
+  }
+
+  function delay(ms){ return new Promise(res => setTimeout(res, ms)); }
+
+  /* ----------------- UI 구성 ----------------- */
+  function buildGameCards(){
+    grid.innerHTML = "";
+    for (let g = 0; g < GAME_COUNT; g++){
+      const cardEl = document.createElement("div");
+      cardEl.className = "game";
+      cardEl.dataset.index = String(g);
+
+      const head = document.createElement("div");
+      head.className = "game-head";
+
+      const title = document.createElement("div");
+      title.className = "game-title";
+      title.textContent = `게임 ${g+1}`;
+
+      const status = document.createElement("div");
+      status.className = "status";
+      status.innerHTML = `<span class="dot"></span><span>대기</span>`;
+
+      head.appendChild(title);
+      head.appendChild(status);
+
+      const nums = document.createElement("div");
+      nums.className = "nums";
+
+      // 메인 번호 6개
+      for (let i = 0; i < MAIN_COUNT; i++){
+        const b = document.createElement("div");
+        b.className = "ball gray";
+        b.textContent = "–";
+        nums.appendChild(b);
+      }
+
+      // ➕ 보너스 분리 기호
+      const plus = document.createElement("div");
+      plus.className = "plus";
+      plus.textContent = "+";
+      nums.appendChild(plus);
+
+      // 보너스 번호 1개
+      const bonusBall = document.createElement("div");
+      bonusBall.className = "ball gray bonus";
+      bonusBall.textContent = "–";
+      nums.appendChild(bonusBall);
+
+      cardEl.appendChild(head);
+      cardEl.appendChild(nums);
+      grid.appendChild(cardEl);
+    }
+  }
+
+  function setStatus(gameIndex, mode, text){
+    const cardEl = grid.querySelector(`.game[data-index="${gameIndex}"]`);
+    const status = cardEl.querySelector(".status");
+    const dot = status.querySelector(".dot");
+    const label = status.querySelector("span:last-child");
+
+    dot.classList.remove("run", "done");
+    if (mode === "run") dot.classList.add("run");
+    if (mode === "done") dot.classList.add("done");
+    label.textContent = text;
+  }
+
+  function spinTickRandomizeAll(gameIndex){
+    const cardEl = grid.querySelector(`.game[data-index="${gameIndex}"]`);
+    const balls = cardEl.querySelectorAll(".ball");
+    
+    for (let i = 0; i < balls.length; i++){
+      // 확정된(locked) 공은 더 이상 돌리지 않음!
+      if (balls[i].dataset.locked === "true") continue;
+      
+      const n = Math.floor(Math.random() * MAX_NUM) + 1;
+      balls[i].className = `ball ${getColorClass(n)} spin` + (i === MAIN_COUNT ? " bonus" : "");
+      balls[i].textContent = n;
+    }
+  }
+
+  function setBall(gameIndex, pos, value, isBonus=false, flash=false){
+    const cardEl = grid.querySelector(`.game[data-index="${gameIndex}"]`);
+    const balls = cardEl.querySelectorAll(".ball");
+    const ball = balls[pos];
+
+    ball.dataset.locked = "true"; // 공 잠금 처리
+
+    ball.className = `ball ${getColorClass(value)}` + (isBonus ? " bonus" : "");
+    ball.textContent = value;
+
+    // "딱!" 느낌
+    ball.classList.remove("spin");
+    ball.classList.add("pop");
+    if (flash) ball.classList.add("flash");
+
+    setTimeout(() => {
+      ball.classList.remove("pop");
+      ball.classList.remove("flash");
+    }, 260);
+  }
+
+  /* ----------------- 애니메이션 추첨 ----------------- */
+  async function runDraw(){
+    if (running) return;
+    running = true;
+
+    btnPick.disabled = true;
+    btnCopy.disabled = true;
+    lastResults = [];
+
+    // 🔥 추첨 버튼을 다시 누를 때 화면을 깨끗하게 초기화
+    buildGameCards(); 
+    meta.textContent = "추첨 중… (돌아가는 맛!)";
+
+    // 모든 게임 스핀 시작
+    const intervals = [];
+    for (let g = 0; g < GAME_COUNT; g++){
+      setStatus(g, "run", "추첨 중");
+      const id = setInterval(() => spinTickRandomizeAll(g), 60);
+      intervals.push(id);
+    }
+
+    // 게임별로 순차 확정
+    for (let g = 0; g < GAME_COUNT; g++){
+      await delay(500); // 이전 게임 확정 후 대기시간
+
+      const final = pickOneGameFinal();
+      lastResults[g] = final;
+
+      // 메인 6개를 하나씩 "딱!" 확정
+      for (let i = 0; i < MAIN_COUNT; i++){
+        await delay(120);
+        setBall(g, i, final.main[i], false, false);
+      }
+
+      // 보너스는 살짝 뜸 들였다가 번쩍
+      await delay(300);
+      setBall(g, MAIN_COUNT, final.bonus, true, true);
+
+      // 해당 게임의 공이 모두 확정되었으므로 타이머 종료
+      clearInterval(intervals[g]);
+
+      // 완료 이펙트
+      setStatus(g, "done", "완료");
+    }
+
+    meta.textContent = "생성 시간: " + new Date().toLocaleString("ko-KR", { hour12: false });
+
+    btnPick.disabled = false;
+    btnCopy.disabled = false;
+    running = false;
+  }
+
+  function formatAllResults(results){
+    return results.map((r, idx) =>
+      `게임 ${idx + 1}: ${r.main.join(", ")} + 보너스 ${r.bonus}`
+    ).join("\n");
+  }
+
+  btnPick.addEventListener("click", runDraw);
+
+  btnCopy.addEventListener("click", async () => {
+    if (!lastResults.length){
+      alert("먼저 추첨을 진행해주세요!");
+      return;
+    }
+    const text = formatAllResults(lastResults);
+    try{
+      await navigator.clipboard.writeText(text);
+      meta.textContent = "복사 완료! ✅";
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+      meta.textContent = "복사 완료! ✅";
+    }
+  });
+
+  // 초기 UI 세팅
+  buildGameCards();
+</script>
 </body>
 </html>
