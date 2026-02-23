@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>로또 5게임 추천기 (모바일 최적화)</title>
+<title>로또 게임 추천기 (모바일 최적화)</title>
 
 <style>
   :root {
@@ -71,6 +71,55 @@
     display: flex;
     gap: 10px;
     margin-bottom: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .count-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--ghost);
+  }
+  body.dark .count-wrap { background: rgba(255,255,255,.04); }
+
+  .count-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  .count-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .count-input input[type="number"]{
+    width: 64px;
+    height: 38px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-weight: 900;
+    font-size: 14px;
+    background: var(--card);
+    color: var(--text);
+  }
+
+  .count-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-size: 18px;
+    font-weight: 900;
+    padding: 0;
   }
 
   button {
@@ -185,6 +234,10 @@
     .nums { gap: 5px; justify-content: center; }
     .ball { width: 36px; height: 36px; font-size: 14px; }
     .plus { font-size: 16px; margin: 0 1px; }
+
+    .count-wrap { width: 100%; }
+    .count-input { justify-content: space-between; }
+    .count-input input[type="number"]{ width: 72px; }
     
     .theme-fab { 
       right: 12px; 
@@ -277,10 +330,18 @@
 <body>
 
 <main class="card" id="card">
-  <h1>🎲 로또 5게임 추천기</h1>
+  <h1>🎲 로또 게임 추천기</h1>
   <p class="sub">드르륵 돌다가 게임별로 “딱!” 멈추고, 보너스는 마지막에 번쩍 ✨</p>
 
   <div class="controls">
+    <div class="count-wrap">
+      <label class="count-label" for="gameCount">게임 수</label>
+      <div class="count-input">
+        <button class="count-btn" id="countDown" type="button" aria-label="게임 수 줄이기">−</button>
+        <input id="gameCount" type="number" min="1" max="10" step="1" value="5" />
+        <button class="count-btn" id="countUp" type="button" aria-label="게임 수 늘리기">+</button>
+      </div>
+    </div>
     <button id="btnPick">추첨 시작하기</button>
     <button id="btnCopy" type="button">전체 복사</button>
   </div>
@@ -292,7 +353,9 @@
 <button class="theme-fab" id="themeBtn" aria-label="테마 전환"></button>
 
 <script>
-  const GAME_COUNT = 5;
+  const DEFAULT_GAME_COUNT = 5;
+  const MIN_GAME_COUNT = 1;
+  const MAX_GAME_COUNT = 10;
   const MAIN_COUNT = 6;
   const MAX_NUM = 45;
 
@@ -301,9 +364,13 @@
   const btnCopy = document.getElementById("btnCopy");
   const meta = document.getElementById("meta");
   const themeBtn = document.getElementById("themeBtn");
+  const gameCountInput = document.getElementById("gameCount");
+  const countDown = document.getElementById("countDown");
+  const countUp = document.getElementById("countUp");
 
   let lastResults = [];
   let running = false;
+  let gameCount = DEFAULT_GAME_COUNT;
 
   /* ----------------- 테마 ----------------- */
   function applyTheme(theme){
@@ -351,7 +418,7 @@
   /* ----------------- UI 구성 ----------------- */
   function buildGameCards(){
     grid.innerHTML = "";
-    for (let g = 0; g < GAME_COUNT; g++){
+    for (let g = 0; g < gameCount; g++){
       const cardEl = document.createElement("div");
       cardEl.className = "game";
       cardEl.dataset.index = String(g);
@@ -453,6 +520,9 @@
 
     btnPick.disabled = true;
     btnCopy.disabled = true;
+    gameCountInput.disabled = true;
+    countDown.disabled = true;
+    countUp.disabled = true;
     lastResults = [];
 
     // 🔥 추첨 버튼을 다시 누를 때 화면을 깨끗하게 초기화
@@ -461,14 +531,14 @@
 
     // 모든 게임 스핀 시작
     const intervals = [];
-    for (let g = 0; g < GAME_COUNT; g++){
+    for (let g = 0; g < gameCount; g++){
       setStatus(g, "run", "추첨 중");
       const id = setInterval(() => spinTickRandomizeAll(g), 60);
       intervals.push(id);
     }
 
     // 게임별로 순차 확정
-    for (let g = 0; g < GAME_COUNT; g++){
+    for (let g = 0; g < gameCount; g++){
       await delay(500); // 이전 게임 확정 후 대기시간
 
       const final = pickOneGameFinal();
@@ -495,6 +565,9 @@
 
     btnPick.disabled = false;
     btnCopy.disabled = false;
+    gameCountInput.disabled = false;
+    countDown.disabled = false;
+    countUp.disabled = false;
     running = false;
   }
 
@@ -526,8 +599,27 @@
     }
   });
 
+  function clampGameCount(value){
+    return Math.min(MAX_GAME_COUNT, Math.max(MIN_GAME_COUNT, value));
+  }
+
+  function setGameCount(next){
+    gameCount = clampGameCount(next);
+    gameCountInput.value = String(gameCount);
+    buildGameCards();
+    meta.textContent = `게임 수 ${gameCount}개로 대기 중…`;
+  }
+
+  gameCountInput.addEventListener("change", () => {
+    const next = Number(gameCountInput.value || DEFAULT_GAME_COUNT);
+    setGameCount(next);
+  });
+
+  countDown.addEventListener("click", () => setGameCount(gameCount - 1));
+  countUp.addEventListener("click", () => setGameCount(gameCount + 1));
+
   // 초기 UI 세팅
-  buildGameCards();
+  setGameCount(DEFAULT_GAME_COUNT);
 </script>
 </body>
 </html>
