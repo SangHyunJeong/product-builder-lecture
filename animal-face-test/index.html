@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>동물상 테스트</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <p class="eyebrow">Teachable Machine</p>
+      <h1>동물상 테스트</h1>
+      <p class="subtitle">카메라로 당신의 분위기를 분석해 고양이상/강아지상 중 무엇에 가까운지 보여드려요.</p>
+    </header>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>라이브 분석</h2>
+          <p>카메라 권한을 허용하면 바로 분석이 시작됩니다.</p>
+        </div>
+        <button id="btnStart" type="button">카메라 시작</button>
+      </div>
+
+      <div class="panel-body">
+        <div class="webcam">
+          <div id="webcam-container" class="webcam-frame"></div>
+          <div class="webcam-hint">정면을 향해 얼굴이 잘 보이게 해주세요</div>
+        </div>
+        <div class="results">
+          <div class="result-header">
+            <h3>분석 결과</h3>
+            <span id="status" class="status">대기 중</span>
+          </div>
+          <div id="label-container" class="labels"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide">
+      <h2>이용 방법</h2>
+      <ol>
+        <li>카메라 시작을 눌러 권한을 허용하세요.</li>
+        <li>얼굴이 프레임 안에 들어오도록 위치를 맞춥니다.</li>
+        <li>실시간으로 고양이상/강아지상 확률을 확인하세요.</li>
+      </ol>
+      <p class="note">모델 파일은 `animal-face-test/my_model/` 폴더에 있어야 합니다.</p>
+    </section>
+  </main>
+
+  <script src="./main.js"></script>
+</body>
+</html>
