@@ -15,12 +15,16 @@ const cameraSection = document.getElementById("camera-section");
 const uploadSection = document.getElementById("upload-section");
 const uploadInput = document.getElementById("imageUpload");
 const uploadPreview = document.getElementById("uploadPreview");
+const uploadBox = document.querySelector(".upload-box");
 
 startButton.addEventListener("click", startCamera);
 modeButtons.forEach((button) => {
   button.addEventListener("click", () => setMode(button.dataset.mode));
 });
 uploadInput.addEventListener("change", handleUpload);
+uploadSection.addEventListener("dragover", handleDragOver);
+uploadSection.addEventListener("dragleave", handleDragLeave);
+uploadSection.addEventListener("drop", handleDrop);
 
 setMode("camera");
 
@@ -122,6 +126,46 @@ async function loop() {
 async function handleUpload(event) {
   const file = event.target.files?.[0];
   if (!file) return;
+  await processFile(file);
+}
+
+async function predictFromSource(source) {
+  const prediction = await model.predict(source);
+  prediction.sort((a, b) => b.probability - a.probability);
+  prediction.forEach((item, index) => {
+    const row = labelContainer.children[index];
+    if (!row) return;
+    const nameEl = row.querySelector(".label-name");
+    const barEl = row.querySelector(".bar span");
+    const percent = Math.round(item.probability * 100);
+    nameEl.textContent = `${item.className} · ${percent}%`;
+    barEl.style.width = `${percent}%`;
+  });
+}
+
+function handleDragOver(event) {
+  event.preventDefault();
+  uploadBox.classList.add("dragover");
+}
+
+function handleDragLeave() {
+  uploadBox.classList.remove("dragover");
+}
+
+async function handleDrop(event) {
+  event.preventDefault();
+  uploadBox.classList.remove("dragover");
+  const file = event.dataTransfer?.files?.[0];
+  if (!file) return;
+  uploadInput.value = "";
+  await processFile(file);
+}
+
+async function processFile(file) {
+  if (!file.type.startsWith("image/")) {
+    alert("이미지 파일만 업로드할 수 있어요.");
+    return;
+  }
   try {
     await ensureModel();
     stopCamera();
@@ -139,18 +183,4 @@ async function handleUpload(event) {
     alert("사진 분석에 실패했어요. 다시 시도해 주세요.");
     console.error(error);
   }
-}
-
-async function predictFromSource(source) {
-  const prediction = await model.predict(source);
-  prediction.sort((a, b) => b.probability - a.probability);
-  prediction.forEach((item, index) => {
-    const row = labelContainer.children[index];
-    if (!row) return;
-    const nameEl = row.querySelector(".label-name");
-    const barEl = row.querySelector(".bar span");
-    const percent = Math.round(item.probability * 100);
-    nameEl.textContent = `${item.className} · ${percent}%`;
-    barEl.style.width = `${percent}%`;
-  });
 }
