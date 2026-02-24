@@ -17,6 +17,7 @@ This is a small multi-page project hub that links to a lotto generator and an an
    - Disqus comments embed.
 3. **Animal Face Test (`/animal-face-test/`)**
    - Teachable Machine webcam-based classifier.
+   - Optional photo upload classification.
    - Live probability bars and status badge.
    - Setup guide and model folder note.
 
