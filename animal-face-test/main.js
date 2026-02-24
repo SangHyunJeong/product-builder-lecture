@@ -1,4 +1,4 @@
-const MODEL_URL = "./my_model/";
+const MODEL_URL = "./my_model/tm-my-image-model/";
 
 let model;
 let webcam;
