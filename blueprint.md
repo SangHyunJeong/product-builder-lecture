@@ -3,20 +3,27 @@
 
 ## Overview
 
-This is a simple web application that generates and displays random lottery numbers. The application is built with HTML, CSS, and JavaScript, and it uses modern web development practices such as Web Components.
+This is a mobile-optimized lottery number generator web app with light/dark themes, animated number draws, and a simple partner inquiry form powered by Formspree.
+
+## Detailed Outline
+
+1. **Core UI**
+   - Single-card layout with title, subtitle, and action controls.
+   - Floating theme toggle button.
+2. **Lotto Generator**
+   - Adjustable game count (1–10).
+   - Animated number drawing with color-coded number ranges.
+   - Copy-all results button.
+3. **Styling & Responsiveness**
+   - Light/dark theme variables.
+   - Responsive grid for game cards.
+   - Mobile-tuned typography, spacing, and button sizes.
+4. **Partner Inquiry Form**
+   - Formspree-backed contact form with name, email, company, and message fields.
+   - Simple, inline card styling consistent with the app.
 
 ## Current Plan
 
-### Phase 1: Basic Lotto Number Generator
-
-1.  **index.html:**
-    *   Set up the basic HTML structure with a title, header, a container for the lottery numbers, and a "Generate Numbers" button.
-2.  **style.css:**
-    *   Style the page with a clean and modern design.
-    *   Style the lottery number container and the numbers themselves.
-    *   Make the layout responsive.
-3.  **main.js:**
-    *   Implement the logic to generate 6 unique random numbers between 1 and 45.
-    *   Create a function to display the numbers on the page.
-    *   Add an event listener to the "Generate Numbers" button to generate and display new numbers.
-
+1. Validate the updated HTML structure for the partner form and ensure required fields are present.
+2. Add Firebase Hosting configuration files if missing.
+3. Deploy the static site to Firebase Hosting once project details and auth are confirmed.
