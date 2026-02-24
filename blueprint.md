@@ -3,7 +3,7 @@
 
 ## Overview
 
-This is a mobile-optimized lottery number generator web app with light/dark themes, animated number draws, and a simple partner inquiry form powered by Formspree.
+This is a mobile-optimized lottery number generator web app with light/dark themes, animated number draws, a partner inquiry form powered by Formspree, and a Disqus comments section.
 
 ## Detailed Outline
 
@@ -21,9 +21,12 @@ This is a mobile-optimized lottery number generator web app with light/dark them
 4. **Partner Inquiry Form**
    - Formspree-backed contact form with name, email, company, and message fields.
    - Simple, inline card styling consistent with the app.
+5. **Comments**
+   - Disqus embed at the bottom of the page.
+   - Styled comment container matching the card aesthetic.
 
 ## Current Plan
 
-1. Validate the updated HTML structure for the partner form and ensure required fields are present.
-2. Add Firebase Hosting configuration files if missing.
-3. Deploy the static site to Firebase Hosting once project details and auth are confirmed.
+1. Insert the Disqus embed code below the partner inquiry form.
+2. Style the comments section to match the existing card UI.
+3. Commit and push changes for deployment.

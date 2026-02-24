@@ -388,6 +388,22 @@
     font-weight: 900;
   }
 
+  .comments {
+    margin-top: 22px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: rgba(255,255,255,.55);
+  }
+  body.dark .comments {
+    background: rgba(255,255,255,.04);
+  }
+
+  .comments h2 {
+    margin: 0 0 12px;
+    font-size: 16px;
+  }
+
 </style>
 </head>
 
@@ -435,6 +451,29 @@
       </div>
       <button type="submit">문의 보내기</button>
     </form>
+  </section>
+
+  <section class="comments" aria-labelledby="commentsTitle">
+    <h2 id="commentsTitle">댓글</h2>
+    <div id="disqus_thread"></div>
+    <script>
+      /**
+      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+      *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+      /*
+      var disqus_config = function () {
+      this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+      */
+      (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://1st-week-1.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </section>
 </main>
 
