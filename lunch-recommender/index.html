@@ -123,45 +123,7 @@
     }
 
     .result-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .photo {
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      min-height: 280px;
-      background: #f2e5d2;
-      position: relative;
-      isolation: isolate;
-    }
-
-    .photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
       display: block;
-      transform: scale(1.04);
-      transition: transform .45s ease;
-    }
-
-    .photo.reveal img { transform: scale(1); }
-
-    .badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      z-index: 1;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.55);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 6px 10px;
-      letter-spacing: .2px;
     }
 
     .result {
@@ -243,8 +205,6 @@
 
     @media (max-width: 860px) {
       .filter-budget { margin-left: 0; }
-      .result-wrap { grid-template-columns: 1fr; }
-      .photo { min-height: 240px; }
       .dish { font-size: 30px; min-height: 72px; }
     }
   </style>
@@ -276,10 +236,6 @@
       </div>
 
       <div class="result-wrap">
-        <figure class="photo" id="photoBox">
-          <span class="badge">TODAY LUNCH</span>
-          <img id="dishImage" alt="추천 점심 메뉴 사진" src="https://source.unsplash.com/1200x800/?korean,lunch" />
-        </figure>
         <article class="result">
           <p class="label">오늘의 점심</p>
           <h2 class="dish" id="dishName">추천받기 버튼을 눌러보세요</h2>
@@ -343,8 +299,6 @@
 
     const dishName = document.getElementById("dishName");
     const dishDesc = document.getElementById("dishDesc");
-    const dishImage = document.getElementById("dishImage");
-    const photoBox = document.getElementById("photoBox");
     const status = document.getElementById("status");
     const pickBtn = document.getElementById("pickBtn");
     const againBtn = document.getElementById("againBtn");
@@ -353,11 +307,6 @@
     const budgetLimit = document.getElementById("budgetLimit");
 
     let lastName = "";
-
-    function imageUrlFor(menu) {
-      const sig = encodeURIComponent(menu.name + "-" + Date.now());
-      return "https://source.unsplash.com/1200x800/?" + encodeURIComponent(menu.query) + "&sig=" + sig;
-    }
 
     function filteredMenus() {
       const budget = Number(budgetLimit.value || 0);
@@ -404,19 +353,11 @@
         dishName.classList.remove("rolling");
         dishName.textContent = selected.name;
         dishDesc.textContent = selected.desc + " (예상 가격: " + selected.price.toLocaleString("ko-KR") + "원)";
-        dishImage.src = imageUrlFor(selected);
-        photoBox.classList.remove("reveal");
-        void photoBox.offsetWidth;
-        photoBox.classList.add("reveal");
         status.textContent = "오늘 점심 후보가 정해졌습니다.";
         pickBtn.disabled = false;
         againBtn.disabled = false;
       }, 900);
     }
-
-    dishImage.addEventListener("error", () => {
-      dishImage.src = "https://source.unsplash.com/1200x800/?lunch,food";
-    });
 
     pickBtn.addEventListener("click", revealMenu);
     againBtn.addEventListener("click", revealMenu);
