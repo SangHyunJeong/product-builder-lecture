@@ -122,10 +122,6 @@
       font-weight: 700;
     }
 
-    .result-wrap {
-      display: block;
-    }
-
     .result {
       border-radius: 18px;
       border: 1px solid var(--line);
@@ -147,7 +143,6 @@
       font-size: 36px;
       line-height: 1.15;
       letter-spacing: -0.5px;
-      min-height: 82px;
       display: grid;
       align-items: center;
     }
@@ -157,7 +152,6 @@
       color: var(--muted);
       line-height: 1.5;
       font-size: 14px;
-      min-height: 64px;
     }
 
     .actions {
@@ -205,7 +199,7 @@
 
     @media (max-width: 860px) {
       .filter-budget { margin-left: 0; }
-      .dish { font-size: 30px; min-height: 72px; }
+      .dish { font-size: 30px; }
     }
   </style>
 </head>
@@ -221,7 +215,7 @@
 
     <section class="panel">
       <h1>점심 메뉴 추천기</h1>
-      <p class="lead">버튼을 누르면 점심 메뉴가 사진과 함께 바로 등장합니다. 고민을 줄이고 빠르게 고르기 위한 랜덤 선택 도우미입니다.</p>
+      <p class="lead">버튼을 누르면 점심 메뉴가 바로 등장합니다. 고민을 줄이고 빠르게 고르기 위한 랜덤 선택 도우미입니다.</p>
 
       <div class="filters" aria-label="추천 필터">
         <label class="filter-check"><input id="koreanOnly" type="checkbox" /> 한식만</label>
@@ -235,18 +229,16 @@
         </label>
       </div>
 
-      <div class="result-wrap">
-        <article class="result">
-          <p class="label">오늘의 점심</p>
-          <h2 class="dish" id="dishName">추천받기 버튼을 눌러보세요</h2>
-          <p class="meta" id="dishDesc">메뉴 특징과 잘 어울리는 상황을 함께 안내해 드립니다.</p>
-          <div class="actions">
-            <button id="pickBtn" type="button">점심 추천받기</button>
-            <button id="againBtn" type="button">다시 추천</button>
-          </div>
-          <p id="status"></p>
-        </article>
-      </div>
+      <article class="result">
+        <p class="label">오늘의 점심</p>
+        <h2 class="dish" id="dishName">추천받기 버튼을 눌러보세요</h2>
+        <p class="meta" id="dishDesc">메뉴 특징과 잘 어울리는 상황을 함께 안내해 드립니다.</p>
+        <div class="actions">
+          <button id="pickBtn" type="button">점심 추천받기</button>
+          <button id="againBtn" type="button">다시 추천</button>
+        </div>
+        <p id="status"></p>
+      </article>
     </section>
   </main>
 
