@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="저녁 메뉴를 버튼 한 번으로 추천받고 음식 사진까지 함께 확인할 수 있는 저녁 메뉴 추천기입니다." />
+  <meta name="google-adsense-account" content="ca-pub-4594614710042728" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4594614710042728" crossorigin="anonymous"></script>
+  <title>저녁 메뉴 추천기 | 생활 도구 모음</title>
+  <style>
+    :root {
+      --bg1: #f7f0ff;
+      --bg2: #bed5ff;
+      --ink: #1c2440;
+      --muted: #4f5d84;
+      --card: rgba(255, 255, 255, 0.82);
+      --line: rgba(55, 76, 126, 0.2);
+      --accent: #2d5eff;
+      --accent-2: #4cc7ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+      background:
+        radial-gradient(900px 600px at 110% -10%, #dae6ff, transparent 55%),
+        radial-gradient(1000px 700px at -10% 120%, #ede3ff, transparent 54%),
+        linear-gradient(140deg, var(--bg1), var(--bg2));
+      min-height: 100dvh;
+    }
+
+    main {
+      width: min(980px, 92vw);
+      margin: 0 auto;
+      padding: 30px 0 54px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .menu {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 13px;
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(2px);
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 24px 44px rgba(44, 57, 101, 0.16);
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      letter-spacing: -0.5px;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .result-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .photo {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      min-height: 280px;
+      background: #e1e7f6;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.04);
+      transition: transform .45s ease;
+    }
+
+    .photo.reveal img { transform: scale(1); }
+
+    .badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 1;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 10px;
+      letter-spacing: .2px;
+    }
+
+    .result {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .dish {
+      margin: 0;
+      font-size: 36px;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      min-height: 82px;
+      display: grid;
+      align-items: center;
+    }
+
+    .meta {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+      min-height: 64px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    #pickBtn {
+      color: #fff;
+      background: linear-gradient(130deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 18px rgba(45, 94, 255, 0.25);
+    }
+
+    #againBtn {
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    #status {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      min-height: 20px;
+    }
+
+    .rolling {
+      animation: pulse .2s linear infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: translateY(0); opacity: .45; }
+      to { transform: translateY(-2px); opacity: 1; }
+    }
+
+    @media (max-width: 860px) {
+      .result-wrap { grid-template-columns: 1fr; }
+      .photo { min-height: 240px; }
+      .dish { font-size: 30px; min-height: 72px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="menu" aria-label="사이트 메뉴">
+      <a href="../">홈</a>
+      <a href="../lotto/">로또 추천기</a>
+      <a href="../animal-face-test/">동물상 테스트</a>
+      <a href="../lunch-recommender/">점심 추천기</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+    </nav>
+
+    <section class="panel">
+      <h1>저녁 메뉴 추천기</h1>
+      <p class="lead">하루를 마무리할 저녁 메뉴를 랜덤으로 골라드립니다. 추천 메뉴 이름과 사진을 함께 보여줘서 선택 시간을 줄일 수 있습니다.</p>
+
+      <div class="result-wrap">
+        <figure class="photo" id="photoBox">
+          <span class="badge">TODAY DINNER</span>
+          <img id="dishImage" alt="추천 저녁 메뉴 사진" src="https://images.unsplash.com/photo-1565299585323-38174c4a6d41?auto=format&fit=crop&w=1200&q=80" />
+        </figure>
+        <article class="result">
+          <p class="label">오늘의 저녁</p>
+          <h2 class="dish" id="dishName">추천받기 버튼을 눌러보세요</h2>
+          <p class="meta" id="dishDesc">메뉴 특징과 추천 상황을 함께 안내해 드립니다.</p>
+          <div class="actions">
+            <button id="pickBtn" type="button">저녁 추천받기</button>
+            <button id="againBtn" type="button">다시 추천</button>
+          </div>
+          <p id="status"></p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const dinnerMenus = [
+      {
+        name: "삼겹살 + 쌈채소",
+        desc: "하루 고생한 날 만족감이 높은 저녁 메뉴. 가족/지인과 함께 먹기 좋습니다.",
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        name: "마라탕",
+        desc: "얼얼한 풍미가 필요한 날 추천. 재료 선택 폭이 넓어 취향 반영이 쉽습니다.",
+        image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        name: "연어 포케",
+        desc: "가볍지만 단백질은 챙기고 싶은 저녁에 적합한 선택입니다.",
+        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        name: "스테이크 + 구운 야채",
+        desc: "주말 저녁이나 기분 전환이 필요한 날에 잘 맞는 구성입니다.",
+        image: "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        name: "닭갈비",
+        desc: "매콤하고 푸짐한 저녁을 원할 때 추천. 볶음밥까지 이어가기 좋습니다.",
+        image: "https://images.unsplash.com/photo-1617196039897-a5ea98d29684?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        name: "초밥 세트",
+        desc: "깔끔한 저녁을 원할 때 무난한 메뉴. 포장/배달 선택도 쉽습니다.",
+        image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        name: "우동 + 튀김",
+        desc: "국물과 바삭한 식감을 함께 원하는 날 잘 맞는 조합입니다.",
+        image: "https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        name: "치킨 반반",
+        desc: "여럿이 나눠 먹기 좋은 저녁 대표 메뉴. 실패 확률이 낮습니다.",
+        image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=1200&q=80"
+      }
+    ];
+
+    const dishName = document.getElementById("dishName");
+    const dishDesc = document.getElementById("dishDesc");
+    const dishImage = document.getElementById("dishImage");
+    const photoBox = document.getElementById("photoBox");
+    const status = document.getElementById("status");
+    const pickBtn = document.getElementById("pickBtn");
+    const againBtn = document.getElementById("againBtn");
+
+    let lastIndex = -1;
+
+    function randomIndex() {
+      if (dinnerMenus.length < 2) return 0;
+      let idx = Math.floor(Math.random() * dinnerMenus.length);
+      while (idx === lastIndex) idx = Math.floor(Math.random() * dinnerMenus.length);
+      lastIndex = idx;
+      return idx;
+    }
+
+    function revealMenu() {
+      pickBtn.disabled = true;
+      againBtn.disabled = true;
+      dishName.classList.add("rolling");
+      status.textContent = "메뉴 고르는 중...";
+
+      const rolling = setInterval(() => {
+        const idx = Math.floor(Math.random() * dinnerMenus.length);
+        dishName.textContent = dinnerMenus[idx].name;
+      }, 90);
+
+      setTimeout(() => {
+        clearInterval(rolling);
+        const selected = dinnerMenus[randomIndex()];
+        dishName.classList.remove("rolling");
+        dishName.textContent = selected.name;
+        dishDesc.textContent = selected.desc;
+        dishImage.src = selected.image;
+        photoBox.classList.remove("reveal");
+        void photoBox.offsetWidth;
+        photoBox.classList.add("reveal");
+        status.textContent = "오늘 저녁 후보가 정해졌습니다.";
+        pickBtn.disabled = false;
+        againBtn.disabled = false;
+      }, 920);
+    }
+
+    pickBtn.addEventListener("click", revealMenu);
+    againBtn.addEventListener("click", revealMenu);
+  </script>
+</body>
+</html>
