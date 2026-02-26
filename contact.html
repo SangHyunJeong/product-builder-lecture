@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="생활 도구 모음 사이트 문의 페이지입니다. 기능 제안, 오류 제보, 제휴 문의를 접수합니다." />
+  <meta name="google-adsense-account" content="ca-pub-4594614710042728" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4594614710042728" crossorigin="anonymous"></script>
+  <title>문의하기 | 생활 도구 모음</title>
+  <style>
+    :root {
+      --bg: #f7f4ef;
+      --card: #fff;
+      --text: #1e1c19;
+      --muted: #68635d;
+      --border: #eadfce;
+      --accent: #d3541a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Noto Sans KR", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, #fff, #f8f2e9 50%, #efe0ce);
+      color: var(--text);
+    }
+    main {
+      width: min(900px, 92vw);
+      margin: 0 auto;
+      padding: 30px 0 54px;
+      display: grid;
+      gap: 14px;
+    }
+    .menu {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .menu a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 13px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 20px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+    }
+    h1, h2 {
+      margin: 0 0 10px;
+    }
+    h1 { font-size: 28px; }
+    h2 { font-size: 20px; }
+    p, li {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+      display: grid;
+      gap: 7px;
+    }
+    .contact-box {
+      margin-top: 12px;
+      display: grid;
+      gap: 8px;
+      font-size: 15px;
+    }
+    .contact-box a {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="menu" aria-label="사이트 메뉴">
+      <a href="./">홈</a>
+      <a href="./about.html">사이트 소개</a>
+      <a href="./contact.html">문의하기</a>
+      <a href="./privacy.html">개인정보처리방침</a>
+    </nav>
+
+    <section class="card">
+      <h1>문의하기</h1>
+      <p>사이트 이용 중 불편 사항, 기능 제안, 광고/제휴 문의를 아래 채널로 접수받고 있습니다.</p>
+      <div class="contact-box">
+        <div>이메일: <a href="mailto:jsh900118@gmail.com">jsh900118@gmail.com</a></div>
+        <div>응답 시간: 영업일 기준 2~3일 이내</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>문의 전 확인</h2>
+      <ul>
+        <li>사용한 브라우저 종류와 버전을 함께 적어 주세요.</li>
+        <li>오류 발생 시각과 재현 절차를 간단히 적어 주세요.</li>
+        <li>스크린샷이 있으면 처리 속도가 빨라집니다.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

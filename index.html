@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="생활형 웹 도구 모음 사이트입니다. 로또 추천기와 동물상 테스트를 제공하며, 운영 원칙과 개인정보 처리방침을 투명하게 공개합니다." />
   <meta name="google-adsense-account" content="ca-pub-4594614710042728" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4594614710042728" crossorigin="anonymous"></script>
-  <title>프로젝트 홈</title>
+  <title>생활 도구 모음 | 프로젝트 홈</title>
   <style>
     :root {
-      --bg: #f6f2ea;
+      --bg: #f7f4ef;
       --card: #ffffff;
-      --text: #1a1a1a;
-      --muted: #6a6a6a;
-      --accent: #ff6b35;
-      --accent-2: #2d9cdb;
-      --border: #efe1d5;
+      --text: #1e1c19;
+      --muted: #68635d;
+      --accent: #d3541a;
+      --accent-2: #0f6d76;
+      --border: #eadfce;
     }
 
     * { box-sizing: border-box; }
@@ -22,36 +23,62 @@
     body {
       margin: 0;
       font-family: "Pretendard", "Noto Sans KR", system-ui, -apple-system, sans-serif;
-      background: radial-gradient(circle at top, #fff, #f6f2ea 55%, #f3e5d6);
+      background: radial-gradient(circle at top, #fff, #f8f2e9 52%, #efe0ce);
       color: var(--text);
-      min-height: 100dvh;
-      display: grid;
-      place-items: center;
     }
 
     main {
-      width: min(860px, 92vw);
-      padding: 36px 0 60px;
+      width: min(980px, 92vw);
+      margin: 0 auto;
+      padding: 30px 0 64px;
       display: grid;
-      gap: 20px;
+      gap: 16px;
+    }
+
+    .top-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .top-nav a {
+      text-decoration: none;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 700;
     }
 
     header {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 26px 24px;
+      padding: 26px 24px 24px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
     }
 
     h1 {
       margin: 0 0 10px;
-      font-size: 28px;
+      font-size: 30px;
     }
 
     .subtitle {
-      margin: 0;
+      margin: 0 0 14px;
       color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .hero-points {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      display: grid;
+      gap: 6px;
       font-size: 14px;
     }
 
@@ -79,7 +106,8 @@
     .card p {
       margin: 0;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     .card a {
@@ -96,30 +124,112 @@
       font-weight: 700;
     }
 
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.05);
+    }
+
+    .section h2 {
+      margin: 0 0 8px;
+      font-size: 19px;
+    }
+
+    .section p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .section ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      display: grid;
+      gap: 6px;
+      font-size: 14px;
+    }
+
+    .policy-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .policy-links a {
+      text-decoration: none;
+      color: var(--accent-2);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding-top: 8px;
+    }
+
     @media (max-width: 700px) {
       .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 26px; }
     }
   </style>
 </head>
 <body>
   <main>
+    <nav class="top-nav" aria-label="사이트 메뉴">
+      <a href="./">홈</a>
+      <a href="./about.html">사이트 소개</a>
+      <a href="./contact.html">문의하기</a>
+      <a href="./privacy.html">개인정보처리방침</a>
+    </nav>
+
     <header>
-      <h1>프로젝트 홈</h1>
-      <p class="subtitle">원하는 테스트를 선택해 들어가세요.</p>
+      <h1>생활 도구 모음</h1>
+      <p class="subtitle">실사용 가능한 웹 도구를 직접 제작하고 운영합니다. 각 도구의 목적, 사용 방법, 데이터 처리 방식을 명확히 공개합니다.</p>
+      <ul class="hero-points">
+        <li>방문자가 바로 이해할 수 있는 기능 중심 콘텐츠 제공</li>
+        <li>정책 페이지와 운영자 연락처를 상시 공개</li>
+        <li>유용성 없는 자동 생성 글 대신 직접 작성한 설명 사용</li>
+      </ul>
     </header>
 
     <section class="grid">
       <article class="card">
         <h2>로또 게임 추천기</h2>
-        <p>게임 수 설정, 애니메이션 추첨, 복사 기능까지 포함된 로또 추천기.</p>
+        <p>게임 수를 직접 선택하고, 번호 추첨 애니메이션과 복사 기능까지 제공하는 실전형 번호 생성 도구입니다.</p>
         <a href="./lotto/">로또 보러가기 →</a>
       </article>
       <article class="card">
         <h2>동물상 테스트</h2>
-        <p>카메라로 고양이상/강아지상 확률을 확인하는 모델 기반 테스트.</p>
+        <p>카메라 또는 업로드 이미지를 이용해 고양이상/강아지상 확률을 확인하는 모델 기반 실험 콘텐츠입니다.</p>
         <a href="./animal-face-test/">동물상 테스트 →</a>
       </article>
     </section>
+
+    <section class="section">
+      <h2>사이트 운영 원칙</h2>
+      <p>콘텐츠 품질과 사용자 경험을 최우선으로 운영합니다. 광고는 콘텐츠 이용을 방해하지 않는 위치에만 배치하며, 클릭 유도 표현을 사용하지 않습니다.</p>
+      <ul>
+        <li>서비스 목적과 기능을 페이지 내에서 명확하게 안내</li>
+        <li>모바일/데스크톱 모두에서 읽기 쉬운 UI 유지</li>
+        <li>문의 접수 채널과 개인정보 처리방침을 고정 공개</li>
+      </ul>
+      <div class="policy-links">
+        <a href="./about.html">사이트 소개 보기</a>
+        <a href="./contact.html">문의하기</a>
+        <a href="./privacy.html">개인정보처리방침 확인</a>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 생활 도구 모음. 모든 콘텐츠는 사용자 편의 향상을 위해 직접 제작되었습니다.
+    </footer>
   </main>
 </body>
 </html>
