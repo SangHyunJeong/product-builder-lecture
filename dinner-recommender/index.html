@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="저녁 메뉴를 버튼 한 번으로 추천받고 음식 사진까지 함께 확인할 수 있는 저녁 메뉴 추천기입니다." />
+  <meta name="description" content="저녁 메뉴를 버튼 한 번으로 추천받아 빠르게 선택할 수 있는 저녁 메뉴 추천기입니다." />
   <meta name="google-adsense-account" content="ca-pub-4594614710042728" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4594614710042728" crossorigin="anonymous"></script>
   <title>저녁 메뉴 추천기 | 생활 도구 모음</title>
@@ -99,6 +99,10 @@
       font-size: 13px;
       font-weight: 700;
       color: var(--ink);
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.78);
     }
 
     .filter-budget {
@@ -198,8 +202,71 @@
     }
 
     @media (max-width: 860px) {
-      .filter-budget { margin-left: 0; }
+      main {
+        width: min(980px, 94vw);
+        padding: 20px 0 38px;
+        gap: 10px;
+      }
+      .menu {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding-bottom: 2px;
+      }
+      .menu::-webkit-scrollbar { display: none; }
+      .menu a {
+        white-space: nowrap;
+        font-size: 12px;
+        padding: 8px 11px;
+      }
+      .panel {
+        border-radius: 16px;
+        padding: 16px 14px;
+        gap: 12px;
+      }
+      h1 { font-size: 24px; }
+      .lead { font-size: 13px; line-height: 1.5; }
+      .filters {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 10px;
+      }
+      .filter-check {
+        width: 100%;
+        font-size: 13px;
+      }
+      .filter-budget {
+        margin-left: 0;
+        width: 100%;
+        justify-content: space-between;
+      }
+      .filter-budget select {
+        flex: 1;
+        max-width: 180px;
+      }
+      .result {
+        border-radius: 14px;
+        padding: 14px;
+        gap: 10px;
+      }
       .dish { font-size: 30px; }
+      .meta { font-size: 13px; }
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .actions button {
+        width: 100%;
+        padding: 12px 10px;
+      }
+      #status { font-size: 12px; }
+    }
+
+    @media (max-width: 420px) {
+      h1 { font-size: 22px; }
+      .dish { font-size: 26px; line-height: 1.2; }
     }
   </style>
 </head>

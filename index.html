@@ -25,6 +25,7 @@
       font-family: "Pretendard", "Noto Sans KR", system-ui, -apple-system, sans-serif;
       background: radial-gradient(circle at top, #fff, #f8f2e9 52%, #efe0ce);
       color: var(--text);
+      min-height: 100dvh;
     }
 
     main {
@@ -122,6 +123,7 @@
       border-radius: 12px;
       font-size: 13px;
       font-weight: 700;
+      justify-content: center;
     }
 
     .section {
@@ -175,8 +177,66 @@
     }
 
     @media (max-width: 700px) {
-      .grid { grid-template-columns: 1fr; }
-      h1 { font-size: 26px; }
+      main {
+        width: min(980px, 94vw);
+        padding: 20px 0 42px;
+        gap: 12px;
+      }
+      .top-nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .top-nav a {
+        text-align: center;
+        padding: 10px 8px;
+        font-size: 12px;
+      }
+      header {
+        border-radius: 16px;
+        padding: 18px 16px 16px;
+      }
+      h1 { font-size: 24px; margin-bottom: 8px; }
+      .subtitle { font-size: 14px; margin-bottom: 10px; }
+      .hero-points {
+        font-size: 13px;
+        gap: 4px;
+        padding-left: 18px;
+      }
+      .grid { grid-template-columns: 1fr; gap: 10px; }
+      .card {
+        border-radius: 14px;
+        padding: 14px;
+        gap: 8px;
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.05);
+      }
+      .card h2 { font-size: 17px; }
+      .card p { font-size: 13px; }
+      .card a {
+        width: 100%;
+        padding: 11px 12px;
+        font-size: 13px;
+      }
+      .section {
+        border-radius: 14px;
+        padding: 14px;
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.04);
+      }
+      .section h2 { font-size: 17px; }
+      .section p, .section ul { font-size: 13px; }
+      .policy-links {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .policy-links a {
+        display: block;
+        padding: 8px 0;
+      }
+      footer {
+        font-size: 12px;
+        padding-top: 4px;
+      }
     }
   </style>
 </head>
@@ -212,12 +272,12 @@
       </article>
       <article class="card">
         <h2>점심 메뉴 추천기</h2>
-        <p>추천받기 버튼 한 번으로 오늘 점심 메뉴와 음식 사진을 랜덤으로 보여주는 선택 도우미입니다.</p>
+        <p>추천받기 버튼 한 번으로 오늘 점심 메뉴를 랜덤으로 보여주는 선택 도우미입니다.</p>
         <a href="./lunch-recommender/">점심 추천받기 →</a>
       </article>
       <article class="card">
         <h2>저녁 메뉴 추천기</h2>
-        <p>하루 마무리에 어울리는 저녁 메뉴를 랜덤으로 추천하고, 분위기 있는 음식 사진까지 함께 보여줍니다.</p>
+        <p>하루 마무리에 어울리는 저녁 메뉴를 랜덤으로 추천해 빠르게 선택할 수 있게 돕습니다.</p>
         <a href="./dinner-recommender/">저녁 추천받기 →</a>
       </article>
     </section>
