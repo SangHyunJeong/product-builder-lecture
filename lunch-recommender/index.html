@@ -81,6 +81,47 @@
       font-size: 15px;
     }
 
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.64);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+
+    .filter-check {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .filter-budget {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin-left: auto;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .filter-budget select {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--ink);
+      height: 34px;
+      padding: 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
     .result-wrap {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -201,6 +242,7 @@
     }
 
     @media (max-width: 860px) {
+      .filter-budget { margin-left: 0; }
       .result-wrap { grid-template-columns: 1fr; }
       .photo { min-height: 240px; }
       .dish { font-size: 30px; min-height: 72px; }
@@ -221,10 +263,22 @@
       <h1>점심 메뉴 추천기</h1>
       <p class="lead">버튼을 누르면 점심 메뉴가 사진과 함께 바로 등장합니다. 고민을 줄이고 빠르게 고르기 위한 랜덤 선택 도우미입니다.</p>
 
+      <div class="filters" aria-label="추천 필터">
+        <label class="filter-check"><input id="koreanOnly" type="checkbox" /> 한식만</label>
+        <label class="filter-check"><input id="noSpicy" type="checkbox" /> 매운맛 제외</label>
+        <label class="filter-budget" for="budgetLimit">예산
+          <select id="budgetLimit">
+            <option value="0">전체</option>
+            <option value="10000">1만원 이하</option>
+            <option value="15000">1만5천원 이하</option>
+          </select>
+        </label>
+      </div>
+
       <div class="result-wrap">
         <figure class="photo" id="photoBox">
           <span class="badge">TODAY LUNCH</span>
-          <img id="dishImage" alt="추천 점심 메뉴 사진" src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=1200&q=80" />
+          <img id="dishImage" alt="추천 점심 메뉴 사진" src="https://source.unsplash.com/1200x800/?korean,lunch" />
         </figure>
         <article class="result">
           <p class="label">오늘의 점심</p>
@@ -242,46 +296,14 @@
 
   <script>
     const lunchMenus = [
-      {
-        name: "김치찌개 정식",
-        desc: "따뜻하고 든든한 한식 점심. 밥 한 공기와 조합이 가장 안정적입니다.",
-        image: "https://images.unsplash.com/photo-1583224964978-2f4f5f8fef74?auto=format&fit=crop&w=1200&q=80"
-      },
-      {
-        name: "제육볶음 덮밥",
-        desc: "매콤한 맛이 필요한 날에 잘 맞는 메뉴. 빠르게 에너지를 채우기 좋습니다.",
-        image: "https://images.unsplash.com/photo-1625938144755-652e08e359b7?auto=format&fit=crop&w=1200&q=80"
-      },
-      {
-        name: "냉모밀 + 유부초밥",
-        desc: "가볍지만 만족감 있는 조합. 식사 후 업무 집중이 필요한 날 추천합니다.",
-        image: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=1200&q=80"
-      },
-      {
-        name: "비빔밥",
-        desc: "채소, 단백질, 탄수화물을 균형 있게 챙길 수 있는 클래식 점심 선택지입니다.",
-        image: "https://images.unsplash.com/photo-1553163147-622ab57be1c7?auto=format&fit=crop&w=1200&q=80"
-      },
-      {
-        name: "돈까스 정식",
-        desc: "바삭한 식감이 필요한 날 추천. 오후에 기분 전환이 필요할 때 좋습니다.",
-        image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=1200&q=80"
-      },
-      {
-        name: "쌀국수",
-        desc: "국물감 있는 면 요리를 원할 때 무난한 선택. 부담이 비교적 적습니다.",
-        image: "https://images.unsplash.com/photo-1516685018646-549198525c1b?auto=format&fit=crop&w=1200&q=80"
-      },
-      {
-        name: "치킨 샐러드 랩",
-        desc: "가볍고 깔끔한 점심을 원할 때 추천. 식후 졸림을 줄이고 싶을 때 좋습니다.",
-        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80"
-      },
-      {
-        name: "칼국수",
-        desc: "따뜻한 국물과 면의 조합이 필요한 날 추천. 비 오는 날 만족도가 높습니다.",
-        image: "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=1200&q=80"
-      }
+      { name: "김치찌개 정식", desc: "따뜻하고 든든한 한식 점심.", cuisine: "korean", spicy: true, price: 9500, query: "kimchi stew korean food" },
+      { name: "제육볶음 덮밥", desc: "매콤한 맛이 필요한 날의 대표 점심.", cuisine: "korean", spicy: true, price: 10000, query: "jeyuk bokkeum korean pork rice" },
+      { name: "비빔밥", desc: "채소와 단백질을 균형 있게 챙기기 좋은 메뉴.", cuisine: "korean", spicy: false, price: 9500, query: "bibimbap korean food" },
+      { name: "돈까스 정식", desc: "바삭한 식감이 필요한 날 무난한 선택.", cuisine: "japanese", spicy: false, price: 11000, query: "tonkatsu japanese meal" },
+      { name: "냉모밀 + 유부초밥", desc: "가볍지만 포만감 있는 세트 메뉴.", cuisine: "japanese", spicy: false, price: 12000, query: "soba inari sushi set" },
+      { name: "쌀국수", desc: "국물 있는 면으로 깔끔하게 먹기 좋은 메뉴.", cuisine: "asian", spicy: false, price: 10000, query: "pho vietnamese noodle soup" },
+      { name: "치킨 샐러드 랩", desc: "가벼운 점심을 원할 때 적합한 조합.", cuisine: "western", spicy: false, price: 9000, query: "chicken salad wrap" },
+      { name: "된장찌개 정식", desc: "자극적이지 않고 안정적인 한식 점심.", cuisine: "korean", spicy: false, price: 9000, query: "doenjang jjigae korean soybean stew" }
     ];
 
     const dishName = document.getElementById("dishName");
@@ -291,48 +313,83 @@
     const status = document.getElementById("status");
     const pickBtn = document.getElementById("pickBtn");
     const againBtn = document.getElementById("againBtn");
+    const koreanOnly = document.getElementById("koreanOnly");
+    const noSpicy = document.getElementById("noSpicy");
+    const budgetLimit = document.getElementById("budgetLimit");
 
-    let lastIndex = -1;
+    let lastName = "";
 
-    function randomIndex() {
-      if (lunchMenus.length < 2) return 0;
-      let idx = Math.floor(Math.random() * lunchMenus.length);
-      while (idx === lastIndex) idx = Math.floor(Math.random() * lunchMenus.length);
-      lastIndex = idx;
-      return idx;
+    function imageUrlFor(menu) {
+      const sig = encodeURIComponent(menu.name + "-" + Date.now());
+      return "https://source.unsplash.com/1200x800/?" + encodeURIComponent(menu.query) + "&sig=" + sig;
+    }
+
+    function filteredMenus() {
+      const budget = Number(budgetLimit.value || 0);
+      return lunchMenus.filter((menu) => {
+        if (koreanOnly.checked && menu.cuisine !== "korean") return false;
+        if (noSpicy.checked && menu.spicy) return false;
+        if (budget > 0 && menu.price > budget) return false;
+        return true;
+      });
+    }
+
+    function pickMenu(pool) {
+      if (pool.length === 1) return pool[0];
+      let selected = pool[Math.floor(Math.random() * pool.length)];
+      while (selected.name === lastName) {
+        selected = pool[Math.floor(Math.random() * pool.length)];
+      }
+      lastName = selected.name;
+      return selected;
     }
 
     function revealMenu() {
+      const pool = filteredMenus();
+      if (pool.length === 0) {
+        status.textContent = "선택한 필터에 맞는 메뉴가 없습니다. 필터를 완화해 주세요.";
+        dishName.textContent = "조건에 맞는 메뉴 없음";
+        dishDesc.textContent = "한식만/매운맛 제외/예산 조건을 조정하면 다시 추천됩니다.";
+        return;
+      }
+
       pickBtn.disabled = true;
       againBtn.disabled = true;
       dishName.classList.add("rolling");
       status.textContent = "메뉴 고르는 중...";
 
-      let ticks = 0;
       const rolling = setInterval(() => {
-        const idx = Math.floor(Math.random() * lunchMenus.length);
-        dishName.textContent = lunchMenus[idx].name;
-        ticks += 1;
-      }, 90);
+        const idx = Math.floor(Math.random() * pool.length);
+        dishName.textContent = pool[idx].name;
+      }, 85);
 
       setTimeout(() => {
         clearInterval(rolling);
-        const selected = lunchMenus[randomIndex()];
+        const selected = pickMenu(pool);
         dishName.classList.remove("rolling");
         dishName.textContent = selected.name;
-        dishDesc.textContent = selected.desc;
-        dishImage.src = selected.image;
+        dishDesc.textContent = selected.desc + " (예상 가격: " + selected.price.toLocaleString("ko-KR") + "원)";
+        dishImage.src = imageUrlFor(selected);
         photoBox.classList.remove("reveal");
         void photoBox.offsetWidth;
         photoBox.classList.add("reveal");
         status.textContent = "오늘 점심 후보가 정해졌습니다.";
         pickBtn.disabled = false;
         againBtn.disabled = false;
-      }, 920);
+      }, 900);
     }
+
+    dishImage.addEventListener("error", () => {
+      dishImage.src = "https://source.unsplash.com/1200x800/?lunch,food";
+    });
 
     pickBtn.addEventListener("click", revealMenu);
     againBtn.addEventListener("click", revealMenu);
+    [koreanOnly, noSpicy, budgetLimit].forEach((el) => {
+      el.addEventListener("change", () => {
+        status.textContent = "필터가 적용되었습니다. 추천받기를 눌러 새로 고르세요.";
+      });
+    });
   </script>
 </body>
 </html>
