@@ -532,25 +532,38 @@
   let gameCount = DEFAULT_GAME_COUNT;
 
   /* ----------------- 테마 ----------------- */
+  const THEME_KEY = "site-theme";
+  const LEGACY_THEME_KEY = "theme";
+
   function applyTheme(theme){
-    if(theme === "dark"){
-      document.body.classList.add("dark");
-      themeBtn.textContent = "🌙";
-    } else {
-      document.body.classList.remove("dark");
-      themeBtn.textContent = "☀";
+    const isDark = theme === "dark";
+    document.documentElement.classList.toggle("theme-dark", isDark);
+    document.body.classList.toggle("dark", isDark);
+    themeBtn.textContent = isDark ? "🌙" : "☀";
+  }
+
+  function getInitialTheme(){
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved === "dark" || saved === "light") return saved;
+
+    const legacy = localStorage.getItem(LEGACY_THEME_KEY);
+    if (legacy === "dark" || legacy === "light") {
+      localStorage.setItem(THEME_KEY, legacy);
+      return legacy;
     }
+
+    return "light";
   }
 
   function toggleTheme(){
     const current = document.body.classList.contains("dark") ? "dark" : "light";
     const next = current === "dark" ? "light" : "dark";
-    localStorage.setItem("theme", next);
+    localStorage.setItem(THEME_KEY, next);
     applyTheme(next);
   }
 
   themeBtn.addEventListener("click", toggleTheme);
-  applyTheme(localStorage.getItem("theme") || "light");
+  applyTheme(getInitialTheme());
 
   /* ----------------- 로또 유틸 ----------------- */
   function getColorClass(n){
