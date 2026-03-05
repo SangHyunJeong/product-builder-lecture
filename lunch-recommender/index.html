@@ -287,6 +287,117 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "vr1veso9cj");
   </script>
+
+  <style>
+    .theme-fab-global {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 9999;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      background: rgba(255, 255, 255, 0.92);
+      color: #1f2630;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(8px);
+    }
+
+    html.theme-dark body {
+      color-scheme: dark;
+      --bg: #11161d;
+      --card: #1a2230;
+      --text: #e8edf7;
+      --muted: #9cadc2;
+      --border: #2b394d;
+      --accent: #ff9051;
+      --accent-2: #67d0dc;
+      --bg1: #15121f;
+      --bg2: #13283d;
+      --ink: #e7edf7;
+      --line: rgba(129, 152, 187, 0.35);
+      background: radial-gradient(circle at top, #1a2330, #11161d 58%, #0b1016) !important;
+    }
+
+    html.theme-dark .theme-fab-global {
+      background: rgba(20, 28, 38, 0.9);
+      color: #e8edf7;
+      border-color: #3a4a5f;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    html.theme-dark .top-nav a,
+    html.theme-dark .menu a,
+    html.theme-dark nav[aria-label="사이트 메뉴"] a {
+      background: rgba(16, 23, 32, 0.9) !important;
+      color: #e1e9f8 !important;
+      border-color: #34465d !important;
+    }
+
+    html.theme-dark header,
+    html.theme-dark .card,
+    html.theme-dark .panel,
+    html.theme-dark .hero,
+    html.theme-dark .guide,
+    html.theme-dark .results {
+      box-shadow: 0 20px 34px rgba(0, 0, 0, 0.38) !important;
+    }
+
+    html.theme-dark .webcam-frame,
+    html.theme-dark .upload-box,
+    html.theme-dark .upload-preview,
+    html.theme-dark .results,
+    html.theme-dark .guide,
+    html.theme-dark .bar,
+    html.theme-dark .status {
+      background: rgba(18, 24, 34, 0.86) !important;
+      color: #dbe6f6 !important;
+      border-color: #33465f !important;
+    }
+  </style>
+
+  <script>
+    (function () {
+      var key = "site-theme";
+      var prefersDark = false;
+      try {
+        prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var saved = localStorage.getItem(key);
+        if ((saved || (prefersDark ? "dark" : "light")) === "dark") {
+          document.documentElement.classList.add("theme-dark");
+        }
+      } catch (e) {}
+
+      window.addEventListener("DOMContentLoaded", function () {
+        if (document.querySelector(".theme-fab-global")) return;
+
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "theme-fab-global";
+
+        function applyTheme(next) {
+          var dark = next === "dark";
+          document.documentElement.classList.toggle("theme-dark", dark);
+          button.textContent = dark ? "다크" : "라이트";
+          button.setAttribute("aria-label", dark ? "라이트 모드로 전환" : "다크 모드로 전환");
+          try { localStorage.setItem(key, next); } catch (e) {}
+        }
+
+        var current = document.documentElement.classList.contains("theme-dark") ? "dark" : "light";
+        applyTheme(current);
+
+        button.addEventListener("click", function () {
+          applyTheme(document.documentElement.classList.contains("theme-dark") ? "light" : "dark");
+        });
+
+        document.body.appendChild(button);
+      });
+    })();
+  </script>
 </head>
 <body>
   <main>
