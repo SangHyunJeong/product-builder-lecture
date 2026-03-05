@@ -325,6 +325,53 @@ button[disabled] {
   color: #a45b35;
 }
 
+html.theme-dark .mode-toggle {
+  background: rgba(17, 24, 35, 0.9);
+}
+
+html.theme-dark .mode-btn.active {
+  background: #1e2a3a;
+  color: #8fd4ff;
+  box-shadow: 0 8px 16px rgba(9, 16, 24, 0.45);
+}
+
+html.theme-dark .webcam-frame,
+html.theme-dark .upload-box,
+html.theme-dark .upload-preview,
+html.theme-dark .results,
+html.theme-dark .guide {
+  background: rgba(18, 24, 34, 0.9);
+  border-color: #33465f;
+}
+
+html.theme-dark .upload-box {
+  color: #8fd4ff;
+}
+
+html.theme-dark .upload-box.dragover {
+  border-color: #8fd4ff;
+  background: rgba(22, 38, 57, 0.95);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.4);
+}
+
+html.theme-dark .bar {
+  background: #2a3a4f;
+}
+
+html.theme-dark .status {
+  background: rgba(120, 70, 35, 0.45);
+  color: #ffd9bf;
+}
+
+html.theme-dark .status.live {
+  background: rgba(35, 87, 120, 0.45);
+  color: #bde5ff;
+}
+
+html.theme-dark .note {
+  color: #ffbc8a;
+}
+
 @media (max-width: 720px) {
   .panel-body {
     grid-template-columns: 1fr;
