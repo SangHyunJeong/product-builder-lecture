@@ -15,9 +15,9 @@ Contact: mailto:jsh900118@gmail.com
 - 동물상 테스트: https://product-builder-lecture-4rx.pages.dev/animal-face-test/
 - 점심 메뉴 추천기: https://product-builder-lecture-4rx.pages.dev/lunch-recommender/
 - 저녁 메뉴 추천기: https://product-builder-lecture-4rx.pages.dev/dinner-recommender/
-- 사이트 소개: https://product-builder-lecture-4rx.pages.dev/about.html
-- 문의하기: https://product-builder-lecture-4rx.pages.dev/contact.html
-- 개인정보처리방침: https://product-builder-lecture-4rx.pages.dev/privacy.html
+- 사이트 소개: https://product-builder-lecture-4rx.pages.dev/about
+- 문의하기: https://product-builder-lecture-4rx.pages.dev/contact
+- 개인정보처리방침: https://product-builder-lecture-4rx.pages.dev/privacy
 
 ## Trust And Policy
 - Sitemap: https://product-builder-lecture-4rx.pages.dev/sitemap.xml

@@ -7,19 +7,19 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://product-builder-lecture-4rx.pages.dev/about.html</loc>
+    <loc>https://product-builder-lecture-4rx.pages.dev/about</loc>
     <lastmod>2026-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://product-builder-lecture-4rx.pages.dev/contact.html</loc>
+    <loc>https://product-builder-lecture-4rx.pages.dev/contact</loc>
     <lastmod>2026-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://product-builder-lecture-4rx.pages.dev/privacy.html</loc>
+    <loc>https://product-builder-lecture-4rx.pages.dev/privacy</loc>
     <lastmod>2026-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
