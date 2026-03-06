@@ -597,6 +597,18 @@
         </div>
         <p class="meta">마지막 업데이트: 2026-03-06 (UTC)</p>
       </article>
+
+      <article class="result">
+        <p class="label">SNS 공유</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <button type="button" id="shareNativeBtn">공유하기</button>
+          <button type="button" id="shareCopyBtn">링크 복사</button>
+          <a id="shareXBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink);font-weight:800;">X</a>
+          <a id="shareFbBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink);font-weight:800;">Facebook</a>
+          <a id="shareKsBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink);font-weight:800;">카카오스토리</a>
+        </div>
+        <p id="shareStatus" class="meta"></p>
+      </article>
     </section>
   </main>
 
@@ -684,6 +696,7 @@
         status.textContent = "선택한 필터에 맞는 메뉴가 없습니다. 필터를 완화해 주세요.";
         dishName.textContent = "조건에 맞는 메뉴 없음";
         dishDesc.textContent = "한식만/매운맛 제외/예산 조건을 조정하면 다시 추천됩니다.";
+        syncShareLinks();
         return;
       }
 
@@ -706,6 +719,7 @@
         status.textContent = "오늘 저녁 후보가 정해졌습니다.";
         pickBtn.disabled = false;
         againBtn.disabled = false;
+        syncShareLinks();
       }, 900);
     }
 
@@ -716,6 +730,52 @@
         status.textContent = "필터가 적용되었습니다. 추천받기를 눌러 새로 고르세요.";
       });
     });
+
+    const shareNativeBtn = document.getElementById("shareNativeBtn");
+    const shareCopyBtn = document.getElementById("shareCopyBtn");
+    const shareXBtn = document.getElementById("shareXBtn");
+    const shareFbBtn = document.getElementById("shareFbBtn");
+    const shareKsBtn = document.getElementById("shareKsBtn");
+    const shareStatus = document.getElementById("shareStatus");
+
+    function currentShareText() {
+      const menu = dishName.textContent.trim();
+      const base = "저녁 메뉴 추천기";
+      if (!menu || menu === "추천받기 버튼을 눌러보세요" || menu === "조건에 맞는 메뉴 없음") {
+        return base + "에서 오늘 저녁 메뉴를 추천받아보세요.";
+      }
+      return base + " 결과: " + menu;
+    }
+
+    function syncShareLinks() {
+      const url = window.location.href;
+      const text = currentShareText();
+      shareXBtn.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent(url);
+      shareFbBtn.href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
+      shareKsBtn.href = "https://story.kakao.com/share?url=" + encodeURIComponent(url);
+    }
+
+    shareNativeBtn.addEventListener("click", async () => {
+      if (!navigator.share) {
+        shareStatus.textContent = "이 브라우저는 기본 공유를 지원하지 않습니다.";
+        return;
+      }
+      try {
+        await navigator.share({ title: document.title, text: currentShareText(), url: window.location.href });
+        shareStatus.textContent = "공유 창을 열었습니다.";
+      } catch (e) {}
+    });
+
+    shareCopyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        shareStatus.textContent = "링크가 복사되었습니다.";
+      } catch (e) {
+        shareStatus.textContent = "링크 복사에 실패했습니다.";
+      }
+    });
+
+    syncShareLinks();
   </script>
 </body>
 </html>

@@ -613,9 +613,56 @@
       <p class="updated-at">마지막 업데이트: 2026-03-06 (UTC)</p>
     </section>
 
+    <section class="section">
+      <h2>SNS로 공유하기</h2>
+      <p>유용했다면 링크를 공유해 주세요. 지인에게 바로 전달할 수 있습니다.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;">
+        <button type="button" id="shareNativeBtn" style="border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer;">공유하기</button>
+        <button type="button" id="shareCopyBtn" style="border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer;">링크 복사</button>
+        <a id="shareXBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;color:var(--text);">X</a>
+        <a id="shareFbBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;color:var(--text);">Facebook</a>
+        <a id="shareKsBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;color:var(--text);">카카오스토리</a>
+      </div>
+      <p id="shareStatus" class="updated-at"></p>
+    </section>
+
     <footer>
       © 2026 생활 도구 모음. 모든 콘텐츠는 사용자 편의 향상을 위해 직접 제작되었습니다.
     </footer>
   </main>
+  <script>
+    (function () {
+      const shareUrl = window.location.href;
+      const shareText = "생활 도구 모음: 점심/저녁 추천기, 로또 추천기, 동물상 테스트";
+      const status = document.getElementById("shareStatus");
+      const xUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText) + "&url=" + encodeURIComponent(shareUrl);
+      const fbUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareUrl);
+      const ksUrl = "https://story.kakao.com/share?url=" + encodeURIComponent(shareUrl);
+
+      document.getElementById("shareXBtn").href = xUrl;
+      document.getElementById("shareFbBtn").href = fbUrl;
+      document.getElementById("shareKsBtn").href = ksUrl;
+
+      document.getElementById("shareNativeBtn").addEventListener("click", async function () {
+        if (!navigator.share) {
+          status.textContent = "이 브라우저는 기본 공유를 지원하지 않습니다.";
+          return;
+        }
+        try {
+          await navigator.share({ title: document.title, text: shareText, url: shareUrl });
+          status.textContent = "공유 창을 열었습니다.";
+        } catch (e) {}
+      });
+
+      document.getElementById("shareCopyBtn").addEventListener("click", async function () {
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          status.textContent = "링크가 복사되었습니다.";
+        } catch (e) {
+          status.textContent = "링크 복사에 실패했습니다.";
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
