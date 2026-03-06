@@ -23,18 +23,52 @@
   <meta name="twitter:description" content="상황에 맞는 점심 메뉴를 빠르게 추천받아 선택할 수 있습니다." />
   <meta name="twitter:image" content="https://product-builder-lecture-4rx.pages.dev/apple-touch-icon.png?v=2" />
   <meta name="theme-color" content="#fff6e8" />
+  <meta name="last-modified" content="2026-03-06" />
   <meta name="google-adsense-account" content="ca-pub-4594614710042728" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4594614710042728" crossorigin="anonymous"></script>
   <title>점심 메뉴 추천기 | 생활 도구 모음</title>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "점심 메뉴 추천기",
-      "url": "https://product-builder-lecture-4rx.pages.dev/lunch-recommender/",
-      "applicationCategory": "LifestyleApplication",
-      "operatingSystem": "Web",
-      "inLanguage": "ko-KR"
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "점심 메뉴 추천기",
+          "url": "https://product-builder-lecture-4rx.pages.dev/lunch-recommender/",
+          "applicationCategory": "LifestyleApplication",
+          "operatingSystem": "Web",
+          "inLanguage": "ko-KR"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "점심 메뉴 추천은 어떤 기준으로 나오나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "등록된 메뉴 목록에서 랜덤으로 추천하며 한식, 매운맛 제외, 예산 필터를 함께 적용할 수 있습니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "필터를 적용했는데 메뉴가 안 나오면 어떻게 하나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "조건이 너무 좁으면 결과가 없을 수 있어 한식만, 매운맛 제외, 예산 조건 중 일부를 완화하면 됩니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "같은 메뉴가 연속으로 나올 수 있나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "가능한 경우 이전 추천 메뉴와 중복되지 않도록 처리해 연속 반복을 줄입니다."
+              }
+            }
+          ]
+        }
+      ]
     }
   </script>
   <style>
@@ -542,6 +576,25 @@
           <button id="againBtn" type="button">다시 추천</button>
         </div>
         <p id="status"></p>
+      </article>
+
+      <article class="result">
+        <p class="label">AI 검색용 핵심 Q&A</p>
+        <div style="display:grid;gap:8px;">
+          <div>
+            <strong>Q. 점심 메뉴 추천은 어떤 기준으로 나오나요?</strong>
+            <p class="meta">A. 등록된 메뉴 목록에서 랜덤으로 추천하며 한식, 매운맛 제외, 예산 필터를 적용할 수 있습니다.</p>
+          </div>
+          <div>
+            <strong>Q. 필터를 적용했는데 메뉴가 안 나오면 어떻게 하나요?</strong>
+            <p class="meta">A. 조건이 너무 좁으면 결과가 없을 수 있어 필터 조건을 일부 완화하면 됩니다.</p>
+          </div>
+          <div>
+            <strong>Q. 같은 메뉴가 연속으로 나올 수 있나요?</strong>
+            <p class="meta">A. 가능하면 이전 추천 메뉴와 중복되지 않도록 처리해 연속 반복을 줄입니다.</p>
+          </div>
+        </div>
+        <p class="meta">마지막 업데이트: 2026-03-06 (UTC)</p>
       </article>
     </section>
   </main>

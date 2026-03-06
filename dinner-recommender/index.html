@@ -23,18 +23,52 @@
   <meta name="twitter:description" content="상황에 맞는 저녁 메뉴를 빠르게 추천받아 선택할 수 있습니다." />
   <meta name="twitter:image" content="https://product-builder-lecture-4rx.pages.dev/apple-touch-icon.png?v=2" />
   <meta name="theme-color" content="#f7f0ff" />
+  <meta name="last-modified" content="2026-03-06" />
   <meta name="google-adsense-account" content="ca-pub-4594614710042728" />
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4594614710042728" crossorigin="anonymous"></script>
   <title>저녁 메뉴 추천기 | 생활 도구 모음</title>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "저녁 메뉴 추천기",
-      "url": "https://product-builder-lecture-4rx.pages.dev/dinner-recommender/",
-      "applicationCategory": "LifestyleApplication",
-      "operatingSystem": "Web",
-      "inLanguage": "ko-KR"
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "저녁 메뉴 추천기",
+          "url": "https://product-builder-lecture-4rx.pages.dev/dinner-recommender/",
+          "applicationCategory": "LifestyleApplication",
+          "operatingSystem": "Web",
+          "inLanguage": "ko-KR"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "저녁 추천은 어떤 기준으로 결정되나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "저장된 메뉴 목록에서 랜덤 추천하며 한식, 매운맛 제외, 예산 필터를 함께 적용할 수 있습니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "예산을 설정하면 가격 정보도 함께 볼 수 있나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "네. 결과에 예상 가격이 표시되며 예산 필터를 통해 조건에 맞는 후보만 추천합니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "결과가 없을 때는 어떻게 해야 하나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "필터 조건을 완화하면 추천 가능한 메뉴 풀을 넓혀 다시 결과를 받을 수 있습니다."
+              }
+            }
+          ]
+        }
+      ]
     }
   </script>
   <style>
@@ -543,6 +577,25 @@
           <button id="againBtn" type="button">다시 추천</button>
         </div>
         <p id="status"></p>
+      </article>
+
+      <article class="result">
+        <p class="label">AI 검색용 핵심 Q&A</p>
+        <div style="display:grid;gap:8px;">
+          <div>
+            <strong>Q. 저녁 추천은 어떤 기준으로 결정되나요?</strong>
+            <p class="meta">A. 저장된 메뉴 목록에서 랜덤 추천하며 한식, 매운맛 제외, 예산 필터를 함께 적용할 수 있습니다.</p>
+          </div>
+          <div>
+            <strong>Q. 예산을 설정하면 가격 정보도 함께 볼 수 있나요?</strong>
+            <p class="meta">A. 결과에 예상 가격이 표시되며 예산 필터로 조건에 맞는 후보만 추천합니다.</p>
+          </div>
+          <div>
+            <strong>Q. 결과가 없을 때는 어떻게 해야 하나요?</strong>
+            <p class="meta">A. 필터 조건을 완화하면 추천 가능한 메뉴 풀을 넓혀 다시 결과를 받을 수 있습니다.</p>
+          </div>
+        </div>
+        <p class="meta">마지막 업데이트: 2026-03-06 (UTC)</p>
       </article>
     </section>
   </main>
