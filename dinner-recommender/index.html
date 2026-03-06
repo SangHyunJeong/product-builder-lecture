@@ -228,6 +228,24 @@
       flex-wrap: wrap;
     }
 
+    .share-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .share-actions button,
+    .share-actions a {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--ink);
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
     button {
       border: 0;
       cursor: pointer;
@@ -500,6 +518,13 @@
       color: #f0f6ff !important;
       border-color: #4a6687 !important;
     }
+
+    html.theme-dark .share-actions button,
+    html.theme-dark .share-actions a {
+      background: rgba(18, 24, 34, 0.9) !important;
+      border-color: #33465f !important;
+      color: #dbe6f6 !important;
+    }
   </style>
 
   <script>
@@ -610,12 +635,12 @@
 
       <article class="result">
         <p class="label">SNS 공유</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <div class="share-actions">
           <button type="button" id="shareNativeBtn">공유하기</button>
           <button type="button" id="shareCopyBtn">링크 복사</button>
-          <a id="shareXBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink);font-weight:800;">X</a>
-          <a id="shareFbBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink);font-weight:800;">Facebook</a>
-          <a id="shareKsBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink);font-weight:800;">카카오스토리</a>
+          <a id="shareXBtn" target="_blank" rel="noopener">X</a>
+          <a id="shareFbBtn" target="_blank" rel="noopener">Facebook</a>
+          <a id="shareKsBtn" target="_blank" rel="noopener">카카오스토리</a>
         </div>
         <p id="shareStatus" class="meta"></p>
       </article>

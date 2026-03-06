@@ -268,6 +268,25 @@
       font-size: 13px;
     }
 
+    .share-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .share-actions button,
+    .share-actions a {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
     .policy-links {
       display: flex;
       flex-wrap: wrap;
@@ -626,12 +645,12 @@
     <section class="section">
       <h2>SNS로 공유하기</h2>
       <p>유용했다면 링크를 공유해 주세요. 지인에게 바로 전달할 수 있습니다.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;">
-        <button type="button" id="shareNativeBtn" style="border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer;">공유하기</button>
-        <button type="button" id="shareCopyBtn" style="border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer;">링크 복사</button>
-        <a id="shareXBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;color:var(--text);">X</a>
-        <a id="shareFbBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;color:var(--text);">Facebook</a>
-        <a id="shareKsBtn" target="_blank" rel="noopener" style="text-decoration:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700;color:var(--text);">카카오스토리</a>
+      <div class="share-actions">
+        <button type="button" id="shareNativeBtn">공유하기</button>
+        <button type="button" id="shareCopyBtn">링크 복사</button>
+        <a id="shareXBtn" target="_blank" rel="noopener">X</a>
+        <a id="shareFbBtn" target="_blank" rel="noopener">Facebook</a>
+        <a id="shareKsBtn" target="_blank" rel="noopener">카카오스토리</a>
       </div>
       <p id="shareStatus" class="updated-at"></p>
     </section>
