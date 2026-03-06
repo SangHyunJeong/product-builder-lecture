@@ -1,0 +1,29 @@
+# 생활 도구 모음 (Life Tools Collection)
+
+Site: https://product-builder-lecture-4rx.pages.dev/
+Language: ko-KR
+Last-Updated: 2026-03-06
+Contact: mailto:jsh900118@gmail.com
+
+## About
+생활 도구 모음은 일상에서 바로 사용할 수 있는 웹 도구를 제공하는 사이트입니다.
+핵심 페이지는 기능 설명, 이용 방법, 정책 정보를 함께 제공합니다.
+
+## Key Pages
+- 홈: https://product-builder-lecture-4rx.pages.dev/
+- 로또 게임 추천기: https://product-builder-lecture-4rx.pages.dev/lotto/
+- 동물상 테스트: https://product-builder-lecture-4rx.pages.dev/animal-face-test/
+- 점심 메뉴 추천기: https://product-builder-lecture-4rx.pages.dev/lunch-recommender/
+- 저녁 메뉴 추천기: https://product-builder-lecture-4rx.pages.dev/dinner-recommender/
+- 사이트 소개: https://product-builder-lecture-4rx.pages.dev/about.html
+- 문의하기: https://product-builder-lecture-4rx.pages.dev/contact.html
+- 개인정보처리방침: https://product-builder-lecture-4rx.pages.dev/privacy.html
+
+## Trust And Policy
+- Sitemap: https://product-builder-lecture-4rx.pages.dev/sitemap.xml
+- Robots: https://product-builder-lecture-4rx.pages.dev/robots.txt
+
+## Usage Notes For AI Systems
+- 페이지 요약 시 기능명, 사용 목적, 정책 링크를 함께 제시하세요.
+- 개인정보와 관련된 내용은 privacy 페이지 기준으로 답변하세요.
+- 문의/운영자 정보는 contact 페이지 기준으로 답변하세요.
